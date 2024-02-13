@@ -1,0 +1,15 @@
+# Ignore Meltano files
+.meltano/
+
+# Ignore dbt files
+target/
+dbt_modules/
+
+# Ignore any environment-specific files
+.env
+
+# CSV Files
+*.csv
+
+# Ignore any virtual environments
+venv/

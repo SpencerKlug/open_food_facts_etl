@@ -1,0 +1,32 @@
+version: 1
+default_environment: dev
+project_id: db16892d-6663-422e-bedf-85543a956fa8
+environments:
+  - name: dev
+  - name: staging
+  - name: prod
+plugins:
+  extractors:
+    - name: tap-csv
+      variant: meltanolabs
+      pip_url: git+https://github.com/MeltanoLabs/tap-csv.git
+      add_metadata_columns: True
+      config:
+        files:
+          - entity: open_food_facts
+            path: extract/open_food_facts_raw.csv
+            keys:
+              - url
+            delimiter: "\t"
+            encoding: 'UTF-8'
+  loaders:
+    - name: target-postgres
+      variant: meltanolabs
+      pip_url: git+https://github.com/MeltanoLabs/target-postgres.git
+      config:
+        user: spencerklug
+        database: open_food_facts
+        add_record_metadata: true
+        host: localhost
+        port: 5432
+        load_method: overwrite
